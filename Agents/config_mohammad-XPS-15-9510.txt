@@ -1,0 +1,5 @@
+{"deterministicPushes" : 1, 
+"gymVersion" : 3,
+"clientMode" : "GUI",
+"perturbations": 1,
+"scenario"   : 10}

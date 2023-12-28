@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+<param name="robot_description" command="$(find xacro)/xacro --inorder $(find talos_description)/robots/talos_full_v2.urdf.xacro 
+            enable_crane:=False enable_leg_passive:=False foot_collision:=thinbox enable_fixed_robot:=False" />
+
+
+<node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -x 0 -y 0 -z 1.5 -urdf -model talos" />
+
+  <arg name="controllers" default="" />
+
+  <arg name="controllers_to_load"
+      value="joint_state_controller
+          torso_controller
+          head_controller
+          left_arm_controller
+          right_arm_controller
+          left_gripper_controller
+          right_gripper_controller
+          left_leg_controller
+          right_leg_controller" />
+
+  <arg name="enable_unloading_workaround" default="false" />
+
+  <!-- PID gains -->
+  <rosparam command="load" file="$(find talos_description)/config/pids.yaml"/>
+
+  <!-- Joint state controller -->
+  <rosparam command="load" file="$(find joint_state_controller)/joint_state_controller.yaml" />
+  <!-- Force-torque sensors controller -->
+  <rosparam command="load" file="$(find force_torque_sensor_controller)/force_torque_sensor_controller.yaml" />
+
+  <!-- IMU sensors controller -->
+  <rosparam command="load" file="$(find imu_sensor_controller)/imu_sensor_controller.yaml" />
+
+  <!-- <arg name="prefix" value="$(find talos_description)/config/joint_trajectory_controllers/" /> -->
+  <arg name="prefix" value="$(find talos_description)/config/joint_torque_controllers/" />
+  <arg name="suffix" value=".yaml" />
+
+  <group >
+    <rosparam command="load" file="$(arg prefix)arm_left$(arg suffix)" />
+    <rosparam command="load" file="$(arg prefix)arm_right$(arg suffix)" />
+    <rosparam command="load" file="$(arg prefix)gripper_left$(arg suffix)" />
+    <rosparam command="load" file="$(arg prefix)gripper_right$(arg suffix)" />
+    <rosparam command="load" file="$(arg prefix)leg_left$(arg suffix)" />
+    <rosparam command="load" file="$(arg prefix)leg_right$(arg suffix)" />
+    <rosparam command="load" file="$(arg prefix)head$(arg suffix)" />
+    <rosparam command="load" file="$(arg prefix)torso$(arg suffix)" />
+  </group>
+
+  <node name="body_controllers_spawner"
+      pkg="controller_manager" type="spawner" output="screen"
+      args="$(arg controllers_to_load)" />
+
+
+  <!-- Controllers that come up started -->
+  <!-- <node name="bringup_controllers_spawner"
+        pkg="controller_manager" type="spawner" output="screen" ns="talos"
+        args="$(arg extra_args)
+              joint_state_controller" /> -->
+
+
+</launch>
