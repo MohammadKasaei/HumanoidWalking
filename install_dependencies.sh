@@ -4,7 +4,10 @@
 set -e
 
 # Install numpy and matplotlib
-pip install numpy scipy matplotlib
+pip install numpy scipy matplotlib 
+
+# Install gym
+pip install gym
 
 # Install pybullet
 pip install pybullet
