@@ -993,7 +993,7 @@ class Coman():
                     dist = 1.4 if self.walk else 0.9
                     rotSpeed = 2 if self.walk else 10
 
-                    self.change_camera(dist, 1, self.gtime*rotSpeed + yaw, 1, pitch, 1, [self.pos[0],self.pos[1], 0.5 ], w)
+                    self.change_camera(dist, 1, self.gtime*rotSpeed + yaw, 1, pitch, 1, [self.pos[0],self.pos[1], 0.15 ], w)
 
                     #p.resetDebugVisualizerCamera( cameraDistance=0.9, cameraYaw=camState[8]+0.07, cameraPitch=-15, cameraTargetPosition=focus)
             
@@ -1172,7 +1172,7 @@ class Coman():
         symOb.append(self.idx)
 
         #================================== Log observations (NN input)
-        ignoreLog = False
+        ignoreLog = True
         if not ignoreLog:
             import csv
             if not hasattr(self, 'logNN'):

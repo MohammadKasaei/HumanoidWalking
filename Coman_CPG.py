@@ -10,7 +10,7 @@ if __name__ == '__main__':
     robot.reset()
      
     robot.StepX = 0.05
-    robot.StepY = 0.
+    robot.StepY = 0.0
     robot.StepTheta = 0.0
 
     robot.StepTime = 0.6
