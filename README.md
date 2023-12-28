@@ -18,8 +18,8 @@ cd HumanoidWalking
 ## Set Up a Virtual Environment (optional):
 
 ```
-python3 -m venv env
-source env/bin/activate  # On Windows use `env\Scripts\activate`
+python3 -m venv walking_env
+source walking_env/bin/activate  # On Windows use `walking_env\Scripts\activate`
 ```
 ## Install Dependencies:
 Before running the script, make sure you have execute permissions. Run the following command:
@@ -38,11 +38,11 @@ Instructions on how to run the code, experiments, and reproduce results.
 ```
 python3 Coman_CPG.py
 ```
-Once everything successfully installed, you'll see the simulated CoMAN while walking forward within the PyBullet simulator.
+Once everything successfully installed, you'll see the simulated CoMAN while **walking forward** within the PyBullet simulator.
 
 ![Alt](imgs/coman.gif)
 
-Additionally, by running the following command, you'll see the simulated Talos robot performing omnidirectional walking.
+Additionally, by running the following command, you'll see the simulated Talos robot performing **omnidirectional walking**.
 ```
 python3 Talos_CPG.py
 ```
