@@ -24,7 +24,7 @@ class Talos():
         __cwd__ = os.path.realpath( os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
         try:
-            with open(os.path.join(__cwd__, 'config_' + platform.node() + '.txt'),'r') as fp:
+            with open(os.path.join(__cwd__, 'config.txt'),'r') as fp:
                 self.CONFIG = json.loads(fp.read()) 
         except:
             assert False, "You need to have a configuration file with the name of your host machine: config_" + platform.node() + '.txt'
