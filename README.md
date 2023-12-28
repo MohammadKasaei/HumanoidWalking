@@ -48,3 +48,28 @@ python3 Talos_CPG.py
 ```
 ![Alt](imgs/talos.gif)
 
+
+
+## Citation
+If you find our work useful in your research, please consider citing:
+```
+@article{kasaei2021robust,
+  title={Robust biped locomotion using deep reinforcement learning on top of an analytical control approach},
+  author={Kasaei, Mohammadreza and Abreu, Miguel and Lau, Nuno and Pereira, Artur and Reis, Luis Paulo},
+  journal={Robotics and Autonomous Systems},
+  volume={146},
+  pages={103900},
+  year={2021},
+  publisher={Elsevier}
+}
+
+@article{kasaei2023learning,
+  title={Learning hybrid locomotion skills—Learn to exploit residual actions and modulate model-based gait control},
+  author={Kasaei, Mohammadreza and Abreu, Miguel and Lau, Nuno and Pereira, Artur and Reis, Luis Paulo and Li, Zhibin},
+  journal={Frontiers in Robotics and AI},
+  volume={10},
+  pages={1004490},
+  year={2023},
+  publisher={Frontiers}
+}
+```
