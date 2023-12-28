@@ -12,7 +12,7 @@ In this repository, you'll find one of the key components of my [PhD research](h
 ## Clone the Repository:
 
 ```
-git clone git@github.com:MohammadKasaei/HumanoidWalking.git
+git clone https://github.com/MohammadKasaei/HumanoidWalking.git
 cd HumanoidWalking
 ```
 ## Set Up a Virtual Environment (optional):
