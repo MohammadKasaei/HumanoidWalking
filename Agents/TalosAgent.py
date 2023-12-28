@@ -538,9 +538,8 @@ class Talos():
             self.FloorId = p.loadURDF("plane.urdf",[0,0,-z_difference])
             #self.FloorId = p.loadURDF("plane_ice.urdf",[0,0,-z_difference])
 
-        p.setAdditionalSearchPath("")
-        # self.ComanId = p.loadURDF(__cwd__ + "/models/coman/model_org_" + platform.node() + ".urdf",[0,0,0.465+0.05])
-        self.ComanId = p.loadURDF("/home/mohammad/controlwithpython/Agent/models/talos_description_no_deps/urdf/talos_full_v2.urdf",[0,0,1.0+0.05])
+        p.setAdditionalSearchPath("")        
+        self.ComanId = p.loadURDF(__cwd__ +"/models/talos_description_no_deps/urdf/talos_full_v2.urdf",[0,0,1.0+0.05])
 
         #Stabilize robot for some iterations
         p.setTimeStep(self.SamplingTime)
@@ -1387,7 +1386,7 @@ class Talos():
         symOb.append(self.idx)
 
         #================================== Log observations (NN input)
-        self.ignoreLog = False
+        self.ignoreLog = True
         if not self.ignoreLog:
             import csv
             if not hasattr(self, 'logNN'):
