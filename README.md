@@ -43,6 +43,8 @@ Once everything successfully installed, you'll see the simulated CoMAN while wal
 ![Alt](imgs/coman.gif)
 
 Additionally, by running the following command, you'll see the simulated Talos robot performing omnidirectional walking.
-
+```
+python3 Talos_CPG.py
+```
 ![Alt](imgs/talos.gif)
 
