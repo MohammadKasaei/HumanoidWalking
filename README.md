@@ -63,7 +63,7 @@ The observation vector captures both internal (proprioceptive) and external (env
 - **Torque** (Nm)
 - **Symmetrized**: Left and right limb data are mirrored to exploit bilateral symmetry.
 
-### 🌍 Base and Sensor Readings
+### Base and Sensor Readings
 - **Base Linear Velocity** (in robot’s local frame):  
   `[vx, vy, vz]` – measures forward, lateral, and vertical movement
 - **Base Angular Velocity** (in local frame):  
@@ -74,7 +74,7 @@ The observation vector captures both internal (proprioceptive) and external (env
 - **Gravity Vector** (in robot’s local frame):  
   `[gx, gy, gz]` – orientation of gravity relative to the robot body
 
-### 🦶 Foot Contact and Pressure
+### Foot Contact and Pressure
 - **Center of Pressure (CoP)** for:
   - Left foot: `[x, y]`
   - Right foot: `[x, y]`
