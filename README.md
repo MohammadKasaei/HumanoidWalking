@@ -38,6 +38,8 @@ Reward = +DistanceImprovement + OrientationImprovement + Bonus - 0.1 * EnergyPen
   - Hip and ankle joints
   - Arm joints
 
+> Additional penalties can be incorporated to encourage smoother motion, including terms for foot impact, torque, motor velocity, joint acceleration, and action change penalties (e.g., r(aₜ, aₜ₊₁)).
+> 
 > The reward is normalized (scaled by 0.01) and truncated if the robot falls (e.g., torso height < 0.37m or hands touch the ground).
 
 ### 🔍 Observation Space
