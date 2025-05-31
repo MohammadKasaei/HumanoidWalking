@@ -709,10 +709,6 @@ class Coman():
         :return: obs, reward, terminal, info
         """     
 
-        # for i in range(len(ppo_action)):
-        #     ppo_action[i] *= (1 + np.random.rand()*(self.acsNoise*2) - self.acsNoise)
-        
-        
         master_control = 0.2
         if self.scenario == 8 and (self.cinematic_pushNo < 8 or (self.cinematic_pushNo == 8 and self.push_countdown < 750)): #enable in last push until stability is achieved
             master_control = 0.0
@@ -793,12 +789,6 @@ class Coman():
             #p.addUserDebugText(text=str(self.push_force),textPosition=robotpos+[0,0,1], lifeTime=0.5)
 
 
-        # if (WriteData==1):
-        #     file.write(str(gtime)+","+str(pos[0])+","+str(pos[1])+","+str(pos[2])+",")
-        #     file.write(str(ori[0])+","+str(ori[1])+","+str(ori[2])+",") 
-        #     file.write(str(CoP_L[0])+","+str(CoP_L[1])+","+str(CoP_R[0])+","+str(CoP_R[1])) 
-        #     file.write("\n")
-
         if (abs(self.gtime-self.twalk0) > (2*self.StepTime)-(self.SamplingTime/2)):
             self.twalk0 = self.gtime
             self.StopForOneStep = 0
@@ -815,8 +805,6 @@ class Coman():
                 self.generate_obstacle_course_walk_command()
             
             
-            
-
             if (self.NewCommand): 
                 self.StepTheta = self.NewStepTheta
                 self.StepX = self.NewStepX*math.cos(math.radians(self.StepTheta))-self.NewStepY*math.sin(math.radians(self.StepTheta))
@@ -894,16 +882,6 @@ class Coman():
 
             self.orip = self.ori
 
-            # if (self.StopForOneStep == 1):
-            #     self.RfootPosition = [0,0,self.Zleg,0]
-            #     self.LfootPosition = [0,0,self.Zleg,0]
-            #     self.JointPos = self.UpdateJointPositions(self.RfootPosition,self.LfootPosition)
-            #     self.JointPositions = [self.WaistX + self.PD_Wx, self.WaistY + self.PD_Wy, self.WaistZ,
-            #                     self.RShX,self.RShY,self.RShZ,self.REB,
-            #                     self.LShX,self.LShY,self.LShZ,self.LEB,
-            #                     self.JointPos[0] + self.PD_HRx, self.JointPos[1] + self.PD_HRy, self.JointPos[2],self.JointPos[3],self.JointPos[4]  + self.PD_ARx, self.JointPos[5]  + self.PD_ARy,
-            #                     self.JointPos[6] + self.PD_HLx, self.JointPos[7] + self.PD_HLy, self.JointPos[8],self.JointPos[9],self.JointPos[10] + self.PD_ALx, self.JointPos[11] + self.PD_ALy]
-            # elif (self.idx>=0 and self.idx<len(self.Walking.LeftLegX)):
             if (True):
             
                 amp_arm = math.radians(2)
@@ -1286,23 +1264,6 @@ class Coman():
     
     def apply_walk_command(self):
 
-        # w = [0.75, 0.5, 0.5]
-        # self.NewStepX =     self.NewStepX     * w[0] + self.NewStepX_raw     * (1-w[0])
-        # self.NewStepY =     self.NewStepY     * w[1] + self.NewStepY_raw     * (1-w[1])
-        # self.NewStepTheta = self.NewStepTheta * w[2] + self.NewStepTheta_raw * (1-w[2])
-
-        # if ((self.NewStepY_raw * self.NewStepY < 0 or self.NewStepTheta_raw * self.NewStepTheta < 0) and 
-        #     (abs(self.NewStepX)>0.03 or abs(self.NewStepY)>0.03 or abs(self.NewStepTheta)>3)): #stop smoothly before changing direction (switch initial foot)
-           
-        #     #Converges to a small value to preserve the sign (which is relevant to simplify the control algorithm)
-        #     self.NewStepX +=     max( min(math.copysign(1e-7, self.NewStepX) - self.NewStepX, 0.1) , -0.1)
-        #     self.NewStepY +=     max( min(math.copysign(1e-7, self.NewStepY) - self.NewStepY, 0.05) , -0.05)
-        #     self.NewStepTheta += max( min(math.copysign(1e-7, self.NewStepTheta) - self.NewStepTheta, 5) , -5)
-        # else:              
-        #     self.NewStepX +=     max( min( self.NewStepX_raw - self.NewStepX, 0.1) , -0.1)
-        #     self.NewStepY +=     max( min( self.NewStepY_raw - self.NewStepY, 0.05) , -0.05)
-        #     self.NewStepTheta += max( min( self.NewStepTheta_raw - self.NewStepTheta, 5) , -5)
-    
         self.NewStepX +=     max( min( self.NewStepX_raw - self.NewStepX, 0.05) , -0.05)
         self.NewStepY +=     max( min( self.NewStepY_raw - self.NewStepY, 0.025) , -0.025)
         self.NewStepTheta += max( min( self.NewStepTheta_raw - self.NewStepTheta, 10) , -10)
@@ -1317,10 +1278,6 @@ class Coman():
 
     def restrict_raw_walk_command(self, isNormalized=False):
 
-        # stepx_lim = [-0.5,0.5]
-        # stepy_lim = [-0.3, 0.3]
-        # steptheta_lim = [-15, 15]
-        
         stepx_lim = [-0.3,0.3]
         stepy_lim = [-0.2, 0.2]
         steptheta_lim = [-15, 15]
@@ -1372,11 +1329,6 @@ class Coman():
 
     def reset(self):
         p.restoreState(stateId=self.resetState)
-
-        #if self.scenario == 4 or self.scenario == 6:
-        #    p.removeBody(self.FloorId)
-        #   self.create_uneven_terrain()
-
         self.episode_number += 1
 
         if(self.CONFIG["deterministicPushes"]):# and self.episode_number == 1: #changed for tilting platform sync
@@ -1386,12 +1338,6 @@ class Coman():
         self.push_countdown = np.random.randint(self.push_min_cooldown, self.push_max_cooldown )
         if self.scenario == 8: self.push_countdown = 1 / self.SamplingTime
         self.push_duration = 5
-        #ang = np.random.rand()*2*math.pi
-        #self.push_force = [math.sin(ang)*np.random.randint( self.push_min_force_norm, self.push_max_force_norm ), 
-        #                   math.cos(ang)*np.random.randint( self.push_min_force_norm, self.push_max_force_norm ), 0]
-        
-        #if(self.CONFIG["deterministicPushes"]):
-        #    print("Next deterministic push: f=", self.push_force, "d=", self.push_duration)
 
         p.setGravity(0,0,-9.81)
         self.tilt = np.array([0,0,-9.81])
@@ -1419,11 +1365,6 @@ class Coman():
                 self.obstCourse_progress = None
                 self.generate_obstacle_course_walk_command()
 
-            # elif self.walk_trajectory_No == 4: # input command
-            #         self.apply_walk_command()
-            
-                
-            # self.predict_FeetCenter, self.predict_Rot = self.get_feet_center_and_rotation()
             self.stats_old_predT = 1
             self.stats_old_predX = 1
             self.stats_old_predY = 1
@@ -1469,9 +1410,6 @@ class Coman():
         self.Walking.Generate()
 
         self.tiltplat_joints = np.array([0,0],np.float32)
-
-        #for i in range(p.getNumJoints(self.ComanId)):
-        #    print(p.getJointInfo(self.ComanId, i))
 
         return self.observe()
        

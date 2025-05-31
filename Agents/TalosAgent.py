@@ -737,23 +737,8 @@ class Talos():
 
 
     def motorTest(self,jointID,pos):
-        # self.JointPos = self.UpdateJointPositions(self.RfootPosition,self.LfootPosition)
-        # self.JointPositions = [self.WaistX + self.PD_Wx, self.WaistY + self.PD_Wy, self.WaistZ,
-        #                         self.RShX,self.RShY,self.RShZ,self.REB,
-        #                         self.LShX,self.LShY,self.LShZ,self.LEB,
-        #                         self.JointPos[0] + self.PD_HRx, self.JointPos[1] + self.PD_HRy, self.JointPos[2],self.JointPos[3],self.JointPos[4]  + self.PD_ARx, self.JointPos[5]  + self.PD_ARy,
-        #                         self.JointPos[6] + self.PD_HLx, self.JointPos[7] + self.PD_HLy, self.JointPos[8],self.JointPos[9],self.JointPos[10] + self.PD_ALx, self.JointPos[11] + self.PD_ALy]
-
-        #  #Apply action to all joints
-        # for j in range(len(self.JointIDOrder)):
-        #     if(j in range(3,11)): f=20
-        #     else: f=600
-        #     p.setJointMotorControl2(bodyIndex=self.ComanId, jointIndex=self.JointIDOrder[j], controlMode=p.POSITION_CONTROL,
-        #                                         targetPosition=self.JointPositions[j], force=f)
         p.setJointMotorControl2(bodyIndex=self.ComanId, jointIndex=self.JointIDOrder[jointID], controlMode=p.POSITION_CONTROL,
-                                                targetPosition=pos, force=100)
-
-
+                                            targetPosition=pos, force=100)
         p.stepSimulation()
 
 
@@ -765,10 +750,6 @@ class Talos():
         :return: obs, reward, terminal, info
         """     
 
-        # for i in range(len(ppo_action)):
-        #     ppo_action[i] *= (1 + np.random.rand()*(self.acsNoise*2) - self.acsNoise)
-        
-        
         master_control = 0.2
         if self.scenario == 8 and (self.cinematic_pushNo < 8 or (self.cinematic_pushNo == 8 and self.push_countdown < 750)): #enable in last push until stability is achieved
             master_control = 0.0
@@ -793,33 +774,6 @@ class Talos():
         if self.walk_duration > 0:
             self.walk_duration -= 1
 
-        #------------------ Attempt to quantify stability
-        #Ori [around front axis, around side axis, around z axis]
-        # _, ori = p.getBasePositionAndOrientation(self.ComanId)
-        # ori = p.getEulerFromQuaternion(ori)
-        # lin,ang = p.getBaseVelocity(bodyUniqueId=self.ComanId)
-        # self.last_speed = 0.95 * self.last_speed + 0.05 * (np.linalg.norm(lin) + np.linalg.norm(ang) + np.linalg.norm(ori[0:2]))
-        # print(self.last_speed, ori[0:2])
-
-        # if round(self.gtime*1000) % 50 == 0:
-        #     start = np.add(self.pos,[0.5,0,0])
-        #     p.addUserDebugLine(lineFromXYZ=start, lineToXYZ=start+np.array([0,0,self.last_speed/2]), 
-        #                     lineColorRGB=[0,0,1], lineWidth=2, lifeTime=0.1)
-        #------------------
-        
-        #------------------ Disable PPO when stable until next push
-        #doubleSupport = (bool(p.getContactPoints(bodyA=self.ComanId, bodyB=self.FloorId, linkIndexA=40)) and
-        #                 bool(p.getContactPoints(bodyA=self.ComanId, bodyB=self.FloorId, linkIndexA=54)))
-
-        # if (self.time_since_last_push > 1.5 and doubleSupport) or self.disablePPO:
-        #     for i in range(12): action[i]  = 0  #disable all except the arms
-        #     self.disablePPO = True
-        #     if round(self.gtime*1000) % 50 == 0:
-        #         p.addUserDebugLine(lineFromXYZ=self.pos, lineToXYZ=[self.pos[0],self.pos[1],1.2], 
-        #                     lineColorRGB=[0,1,0], lineWidth=4, lifeTime=0.05)
-        #------------------
-
-
         #--------------------------------------- Manual push
         if(self.CONFIG["clientMode"]=="GUI"):
             val = p.readUserDebugParameter(self.param_apply)
@@ -839,23 +793,23 @@ class Talos():
         #--------------------------------------- External perturbations (depends on scenario)
         terminal=False
         
-        # # if self.ENABLE_PERTURBATIONS:
-        # #     if self.scenario == 0:
-        # #         self.auto_push_routine() #apply pushes automatically
-        # #     elif self.scenario == 3:
-        # #         self.auto_gravity_routine()
-        # #     elif self.scenario == 4:  #uneven terrain
-        # #         self.auto_push_routine() #apply pushes automatically
-        # #     elif self.scenario == 5 or self.scenario == 6:  #flat / uneven (radial test)
-        # #         terminal = self.radial_push_routine()
-        # #     elif self.scenario == 7: #tilting platform
-        # #         terminal = self.auto_tilt_routine()
-        # #     elif self.scenario == 8: #cinematic push
-        # #         self.cinematic_push_routine()
-        # #     elif self.scenario == 9: #obstacle course
-        # #         self.auto_push_routine()
-        # #     elif self.scenario == 10: #figure_8 
-        # #         self.auto_push_routine()
+        # if self.ENABLE_PERTURBATIONS:
+        #     if self.scenario == 0:
+        #         self.auto_push_routine() #apply pushes automatically
+        #     elif self.scenario == 3:
+        #         self.auto_gravity_routine()
+        #     elif self.scenario == 4:  #uneven terrain
+        #         self.auto_push_routine() #apply pushes automatically
+        #     elif self.scenario == 5 or self.scenario == 6:  #flat / uneven (radial test)
+        #         terminal = self.radial_push_routine()
+        #     elif self.scenario == 7: #tilting platform
+        #         terminal = self.auto_tilt_routine()
+        #     elif self.scenario == 8: #cinematic push
+        #         self.cinematic_push_routine()
+        #     elif self.scenario == 9: #obstacle course
+        #         self.auto_push_routine()
+        #     elif self.scenario == 10: #figure_8 
+        #         self.auto_push_routine()
                 
 
         # #--------------------------------------- Push force arrow
@@ -876,34 +830,10 @@ class Talos():
             #p.addUserDebugText(text=str(self.push_force),textPosition=robotpos+[0,0,1], lifeTime=0.5)
 
 
-        # if (WriteData==1):
-        #     file.write(str(gtime)+","+str(pos[0])+","+str(pos[1])+","+str(pos[2])+",")
-        #     file.write(str(ori[0])+","+str(ori[1])+","+str(ori[2])+",") 
-        #     file.write(str(CoP_L[0])+","+str(CoP_L[1])+","+str(CoP_R[0])+","+str(CoP_R[1])) 
-        #     file.write("\n")
-
-        #if (abs(self.gtime-self.twalk0) > ((2-self.StopForOneStep)*self.StepTime)-(self.SamplingTime/2)):
         if (abs(self.gtime-self.twalk0) > (2*self.StepTime)-(self.SamplingTime/2)):
             self.twalk0 = self.gtime
             self.StopForOneStep = 0
 
-            # if self.walk_trajectory_No == 0:
-            #     if self.walk_duration == 0:
-            #         self.generate_random_walk_command()
-            #         self.walk_duration = self.WALK_DURATION_MAX / self.SamplingTime
-            #     else:
-            #         self.apply_walk_command()
-            # elif self.walk_trajectory_No == 1:
-            #     self.generate_8_figure_walk_command()
-            # elif self.walk_trajectory_No == 2:
-            #     self.generate_obstacle_course_walk_command()
-            
-            # elif self.walk_trajectory_No == 4: # input command
-            #     self.NewStepX_raw     = 0
-            #     self.NewStepY_raw     = 0
-            #     self.NewStepTheta_raw = 0
-
-            #     self.apply_walk_command()
             
             self.apply_walk_command()
             if (self.NewCommand): 
@@ -912,98 +842,13 @@ class Talos():
                 self.StepY = self.NewStepX*math.sin(math.radians(self.StepTheta))+self.NewStepY*math.cos(math.radians(self.StepTheta))
                 self.StepTime = self.NewStepTime
                 self.NewCommand = 0
-            # elif not self.walk:           
-            #     self.StepTheta = 0             
-            #     self.StepX = 0             
-            #     self.StepY = 0             
-            #     self.StepTime = 0.30             
-            #     self.NewCommand = 0
 
-
-               
-            # if (self.StepY<0):
-            #     if (self.FirstStepIsRight==0): # robot should stop
-            #         self.StopForOneStep = 1
-            #     self.FirstStepIsRight = 1
-            # elif  (self.StepY>0 or self.StepTheta>0):
-            #     if (self.FirstStepIsRight==1): # robot should stop
-            #         self.StopForOneStep = 1
-            #     self.FirstStepIsRight = 0
-            # elif  (self.StepY>0 or self.StepTheta<0):
-            #     if (self.FirstStepIsRight==0): # robot should stop
-            #         self.StopForOneStep =1
-            #     self.FirstStepIsRight = 1
-            
-            # # self.StopForOneStep =0
-            # # if (self.StopForOneStep):
-            # #      self.twalk0 = self.twalk0 + (1.5*self.StepTime) #int(round(twalk/SamplingTime))
-            # if (self.StopForOneStep):
-            #     self.StepTheta = 0             
-            #     #self.StepX = 0             
-            #     self.StepY = 0             
-            #     self.StepTime = 0.2  
-               
-            
-            
-            # # if (self.FirstStepIsRight):
-            # #     self.FR0X = -self.StepX/2
-            # #     self.FR0Y = -self.DistanceBetweenFeet/2 + self.StepY
-            # #     self.FL0X = 0
-            # #     self.FL0Y = self.DistanceBetweenFeet/2  - self.StepY
-            # # else:
-            # #     self.FR0X = 0
-            # #     self.FR0Y = -self.DistanceBetweenFeet/2 - self.StepY  
-            # #     self.FL0X = -self.StepX/2    
-            # #     self.FL0Y = self.DistanceBetweenFeet/2  + self.StepY
-
-
-            # if (self.StopForOneStep):
-            #     if (not self.FirstStepIsRight):
-            #         self.FR0X = -self.StepX/2
-            #         self.FR0Y = -self.DistanceBetweenFeet/2 
-            #         self.FL0X = 0
-            #         self.FL0Y = self.DistanceBetweenFeet/2  
-            #     else:
-            #         self.FR0X = 0
-            #         self.FR0Y = -self.DistanceBetweenFeet/2   
-            #         self.FL0X = -self.StepX/2    
-            #         self.FL0Y = self.DistanceBetweenFeet/2  
-            # else:
-            #     if (self.FirstStepIsRight):
-            #         self.FR0X = -self.StepX/2
-            #         self.FR0Y = -self.DistanceBetweenFeet/2 
-            #         self.FL0X = 0
-            #         self.FL0Y = self.DistanceBetweenFeet/2  
-            #     else:
-            #         self.FR0X = 0
-            #         self.FR0Y = -self.DistanceBetweenFeet/2   
-            #         self.FL0X = -self.StepX/2    
-            #         self.FL0Y = self.DistanceBetweenFeet/2        
-
-            #self.StepTime += (self.action[11]*0.1) 
             self.StepTime = self.SAT(self.StepTime, 0.5, 0.2)
 
-            #print("StepTime:",self.StepTime, end='  ')
-            #print("zLeg:" , -self.SAT((self.action[10]*0.02),0.010,-0.025))
-                        
-            # self.Walking = GenrateWalkingTrajectories(self.FR0X,self.FR0Y,self.FL0X,self.FL0Y,self.StepX,self.StepY,
-            #     self.SwingStepZ,self.StepTime,self.SamplingTime,self.FirstStepIsRight,-self.Zleg,-self.SAT((self.action[10]*0.02),0.015,-0.025))
-            # self.Walking.Generate()  
             self.idx = -1
 
-            #self.commandPenalty = self.generate_walk_predictions()
-
-            # fig = plt.figure()
-            # plt.plot(self.Walking.RightLegX)   
-            # plt.grid(True)
-            # plt.plot(self.Walking.RightLegY) 
-            # plt.plot(self.Walking.LeftLegX) 
-            # plt.plot(self.Walking.LeftLegY)   
-            # plt.show()
 
         else:
-            #self.Walking = GenrateWalkingTrajectories(self.FR0X,self.FR0Y,self.FL0X,self.FL0Y,self.StepX,self.StepY,self.SwingStepZ,self.StepTime,self.SamplingTime,self.FirstStepIsRight,-self.Zleg)
-            #self.Walking.Generate()  
 
             twalk = self.gtime - self.twalk0
             self.idx = self.idx+1 #int(round(twalk/SamplingTime))
@@ -1064,65 +909,24 @@ class Talos():
 
             self.orip = self.ori
 
-            # if (self.StopForOneStep == 1):
-            #     self.RfootPosition = [0,0,self.Zleg,0]
-            #     self.LfootPosition = [0,0,self.Zleg,0]
-            #     self.JointPos = self.UpdateJointPositions(self.RfootPosition,self.LfootPosition)
-            #     self.JointPositions = [self.WaistX + self.PD_Wx, self.WaistY + self.PD_Wy, self.WaistZ,
-            #                     self.RShX,self.RShY,self.RShZ,self.REB,
-            #                     self.LShX,self.LShY,self.LShZ,self.LEB,
-            #                     self.JointPos[0] + self.PD_HRx, self.JointPos[1] + self.PD_HRy, self.JointPos[2],self.JointPos[3],self.JointPos[4]  + self.PD_ARx, self.JointPos[5]  + self.PD_ARy,
-            #                     self.JointPos[6] + self.PD_HLx, self.JointPos[7] + self.PD_HLy, self.JointPos[8],self.JointPos[9],self.JointPos[10] + self.PD_ALx, self.JointPos[11] + self.PD_ALy]
-            # elif (self.idx>=0 and self.idx<len(self.Walking.LeftLegX)):
+
             if (True):
             
-                # amp_arm = math.radians(2)
-                # arm_offset = 20 
                 if (self.FirstStepIsRight):
-                    # self.LShX = math.radians(-arm_offset ) + amp_arm*math.sin(twalk*2*math.pi/(2*self.StepTime)) #- EN_ArmX * 2 * PDArmX
-                    # self.RShX= math.radians (arm_offset ) - amp_arm*math.sin(twalk*2*math.pi/(2*self.StepTime)) #- EN_ArmX * 2 * PDArmX
                     self.Ltheta = math.radians(self.StepTheta)*self.SAT(twalk/self.StepTime,1,0)
                     self.Rtheta = math.radians(self.StepTheta)*self.SAT((twalk-self.StepTime)/self.StepTime,1,0)
                     
                 else:
-                    # self.LShX = math.radians(-arm_offset ) - amp_arm*math.sin(twalk*2*math.pi/(2*self.StepTime)) #- EN_ArmX * 2 * PDArmX
-                    # self.RShX = math.radians(arm_offset ) + amp_arm*math.sin(twalk*2*math.pi/(2*self.StepTime)) #- EN_ArmX * 2 * PDArmX
                     self.Ltheta = math.radians(self.StepTheta)*self.SAT((twalk-self.StepTime)/self.StepTime,1,0)
                     self.Rtheta = math.radians(self.StepTheta)*self.SAT(twalk/self.StepTime,1,0)
                     
-
-                # dY = (self.DistanceBetweenFeet/2)*math.cos(math.radians(self.StepTheta))
-                # self.RfootPosition = [self.Walking.RightLegX[self.idx], self.Walking.RightLegY[self.idx]+dY,self.Walking.RightLegZ[self.idx],self.Rtheta]
-                # self.LfootPosition = [self.Walking.LeftLegX[self.idx],self.Walking.LeftLegY[self.idx]-dY,self.Walking.LeftLegZ[self.idx],self.Ltheta]
-                               
-
-                #self.RfootPosition = [self.Walking.RightLegX[self.idx], self.Walking.RightLegY[self.idx]+self.DistanceBetweenFeet/2,self.Walking.RightLegZ[self.idx],self.Rtheta]
-                #self.LfootPosition = [self.Walking.LeftLegX[self.idx],self.Walking.LeftLegY[self.idx]-self.DistanceBetweenFeet/2,self.Walking.LeftLegZ[self.idx],self.Ltheta]
-                               
-
-                # # ##cpg
-                
-                # self.NewStepX   = 0.0
-                # self.NewStepY   = 0.0
-                # self.SwingStepZ = 0.02
-                # self.StepTheta  = -10
-
-                # self.StepX = self.NewStepX*math.cos(math.radians(self.StepTheta))-self.NewStepY*math.sin(math.radians(self.StepTheta))
-                # self.StepY = self.NewStepX*math.sin(math.radians(self.StepTheta))+self.NewStepY*math.cos(math.radians(self.StepTheta))
-                
-
-                
                 lpos, rpos = self.generate_cpg(twalk)
                 self.RfootPosition = rpos
                 self.LfootPosition = lpos
                 arm_offset = 20 
-                # self.LShX = math.radians(arm_offset)+lpos[4]
-                # self.RShX = -math.radians(arm_offset)+rpos[4]
                 self.LEB = -math.radians(arm_offset)+lpos[4]
                 self.REB = -math.radians(arm_offset)+rpos[4]
 
-                
-                
 
                 print ("t {:2.3f} x {:2.3f} y {:2.3f} z{:2.3f}".format(twalk, self.StepX,self.StepY,self.StepTheta))
                 time.sleep(0.001)
@@ -1133,24 +937,6 @@ class Talos():
                                 self.LShX,self.LShY,self.LShZ,self.LEB,
                                 self.JointPos[0] + self.PD_HRx, self.JointPos[1] + self.PD_HRy, self.JointPos[2],self.JointPos[3],self.JointPos[4]  + self.PD_ARx, self.JointPos[5]  + self.PD_ARy,
                                 self.JointPos[6] + self.PD_HLx, self.JointPos[7] + self.PD_HLy, self.JointPos[8],self.JointPos[9],self.JointPos[10] + self.PD_ALx, self.JointPos[11] + self.PD_ALy]
-
-
-        # if (self.gtime-self.twalk0 > (self.StepTime)-(self.SamplingTime/2) and
-        #     self.gtime-self.twalk0 < (self.StepTime)+(self.SamplingTime/2)):
-
-        #     self.generate_walk_predictions()
-
-            #1 step had ended, lets print the ground truth
-            # lfwpos, _ = p.getLinkState(bodyUniqueId=self.ComanId, linkIndex=54)[0:2] #position of each foot in world coordinates
-            # rfwpos, _ = p.getLinkState(bodyUniqueId=self.ComanId, linkIndex=40)[0:2] 
-
-            # pAndO = list(p.getBasePositionAndOrientation(self.ComanId))
-            # pAndO[1] = np.degrees(p.getEulerFromQuaternion(pAndO[1]))
-
-            # feetCenter = np.add(lfwpos,rfwpos)/2.0
-        
-            # print("Pos/Ori:  {:6.3f} {:6.3f} {:6.3f}   {:6.3f}    PosFeet: {:6.3f} {:6.3f} {:6.3f}"
-            #         .format( pAndO[0][0], pAndO[0][1], pAndO[0][2], pAndO[1][2], feetCenter[0], feetCenter[1], feetCenter[2]))
 
 
         pi_2 = math.pi/2
@@ -1192,7 +978,6 @@ class Talos():
             camState = p.getDebugVisualizerCamera()
             w = 0.98
             focus = [w*camState[11][0]+(1-w)*self.pos[0], w*camState[11][1]+(1-w)*self.pos[1], 0.5]
-            #p.resetDebugVisualizerCamera( cameraDistance=camState[10], cameraYaw=camState[8]+0.1, cameraPitch=camState[9], cameraTargetPosition=focus)
             if p.readUserDebugParameter(self.param_switchcam) % 2 == 1:
                 if self.scenario == 7:
                     p.resetDebugVisualizerCamera( cameraDistance=2.0, cameraYaw=camState[8], cameraPitch=-13, cameraTargetPosition=[0,0,0])
@@ -1209,7 +994,6 @@ class Talos():
 
                     self.change_camera(dist, 1, self.gtime*rotSpeed + yaw, 1, pitch, 1, [self.pos[0],self.pos[1], 0.5 ], w)
 
-                    #p.resetDebugVisualizerCamera( cameraDistance=0.9, cameraYaw=camState[8]+0.07, cameraPitch=-15, cameraTargetPosition=focus)
             
 
         pos, _ = p.getBasePositionAndOrientation(self.ComanId)
@@ -1228,7 +1012,6 @@ class Talos():
 
         #------------------------------------- energy penalty
 
-        #PD[10], zleg, stime, arms[8]
         abs_ppo_action = np.abs(ppo_action)
 
         for i in range(2):      abs_ppo_action[i] *= 0.5    #PD.wx PD.wy
@@ -1256,8 +1039,6 @@ class Talos():
             self.energy_penalty_sum += en_penalty
             self.energy_penalty_sum_cnt += 1
 
-            
-       
         #print("Rew: {:.3f} PD_hip_penalty: {:.3f}  Zleg_penalty: {:.3f}  stime: {:.3f}".format(
         #    reward,  PD_hip_penalty, Zleg_penalty, Step_time_penalty))
         
@@ -1415,19 +1196,6 @@ class Talos():
                 writer = csv.writer(f)
                 writer.writerow(ob)
 
-        # symAcIdx =  np.array([0,1,3,2,5,4,7,6,9,8,10,11,16,17,18,19,12,13,14,15])
-        # symAcSign = np.array([1,-1,1,1,-1,-1,1,1,-1,-1,1,1,1,-1,-1,1,1,-1,-1,1])
-        # symObIdx = np.array([0,1,2,3,4,5,6,7,8,21,22,23,24,25,26,27,28,29,30,31,32,9,10,11,12,13,14,15,16,17,18,19,20,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,69,70,71,72,73,74,75,76,77,78,81,82,79,80,84,83,85,86,87,88])
-        # symObSign = np.array([1,1,1,-1,-1,-1,-1,-1,-1,1,1,1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,-1,-1,-1,1,1,1,-1,-1,-1,-1,-1,-1,1,1,1,1,1,1,-1,-1,-1,1,-1,1,-1,1,-1,1,1,-1,1,1,-1,1,-1,1,1,1,-1,-1,1])
-        # asdf = np.take(np.asarray(ob, dtype=np.float32), symObIdx)
-        # asdf *= symObSign
-
-        # assert len(ob) == len(symOb)
-        # for i in range(len(ob)):
-        #     print("{:3} {:6.3f} {:6.3f} {:6.3f}".format( i, ob[i], symOb[i], asdf[i]))
-        #     assert symOb[i]-0.0001 < asdf[i] and symOb[i]+0.0001 > asdf[i]
-
-
         return np.asarray(ob, dtype=np.float32)
 
 
@@ -1500,40 +1268,17 @@ class Talos():
     
     def apply_walk_command(self):
 
-        # w = [0.75, 0.5, 0.5]
-        # self.NewStepX =     self.NewStepX     * w[0] + self.NewStepX_raw     * (1-w[0])
-        # self.NewStepY =     self.NewStepY     * w[1] + self.NewStepY_raw     * (1-w[1])
-        # self.NewStepTheta = self.NewStepTheta * w[2] + self.NewStepTheta_raw * (1-w[2])
-
-        # if ((self.NewStepY_raw * self.NewStepY < 0 or self.NewStepTheta_raw * self.NewStepTheta < 0) and 
-        #     (abs(self.NewStepX)>0.03 or abs(self.NewStepY)>0.03 or abs(self.NewStepTheta)>3)): #stop smoothly before changing direction (switch initial foot)
-           
-        #     #Converges to a small value to preserve the sign (which is relevant to simplify the control algorithm)
-        #     self.NewStepX +=     max( min(math.copysign(1e-7, self.NewStepX) - self.NewStepX, 0.1) , -0.1)
-        #     self.NewStepY +=     max( min(math.copysign(1e-7, self.NewStepY) - self.NewStepY, 0.05) , -0.05)
-        #     self.NewStepTheta += max( min(math.copysign(1e-7, self.NewStepTheta) - self.NewStepTheta, 5) , -5)
-        # else:              
-        #     self.NewStepX +=     max( min( self.NewStepX_raw - self.NewStepX, 0.1) , -0.1)
-        #     self.NewStepY +=     max( min( self.NewStepY_raw - self.NewStepY, 0.05) , -0.05)
-        #     self.NewStepTheta += max( min( self.NewStepTheta_raw - self.NewStepTheta, 5) , -5)
-    
         self.NewStepX +=     max( min( self.NewStepX_raw - self.NewStepX, 0.05) , -0.05)
         self.NewStepY +=     max( min( self.NewStepY_raw - self.NewStepY, 0.025) , -0.025)
         self.NewStepTheta += max( min( self.NewStepTheta_raw - self.NewStepTheta, 10) , -10)
 
         self.NewCommand = 1
-
-        #print("Apply:", self.NewStepX, self.NewStepY, self.NewStepTheta)
-
+        
         self.predictX = (self.NewStepX * 0.85)
         self.predictY = (self.NewStepY * 0.80)
         self.predictT = (self.NewStepTheta * 1.1 - self.NewStepY * 80)
 
     def restrict_raw_walk_command(self, isNormalized=False):
-
-        # stepx_lim = [-0.5,0.5]
-        # stepy_lim = [-0.3, 0.3]
-        # steptheta_lim = [-15, 15]
         
         stepx_lim = [-0.3,0.3]
         stepy_lim = [-0.2, 0.2]
@@ -1554,9 +1299,6 @@ class Talos():
             y = 0
         if abs(t) < 0.2: 
             t = 0
-
-        #compensate rotation
-        #t += y*1.17
 
         #limit overall maximum (only affects the command when the limit is actually exceeded)
         manhatDist = abs(x) + abs(y) + abs(t)
@@ -1587,9 +1329,6 @@ class Talos():
     def reset(self):
         p.restoreState(stateId=self.resetState)
 
-        #if self.scenario == 4 or self.scenario == 6:
-        #    p.removeBody(self.FloorId)
-        #   self.create_uneven_terrain()
 
         self.episode_number += 1
 
@@ -1600,12 +1339,6 @@ class Talos():
         self.push_countdown = np.random.randint(self.push_min_cooldown, self.push_max_cooldown )
         if self.scenario == 8: self.push_countdown = 1 / self.SamplingTime
         self.push_duration = 5
-        #ang = np.random.rand()*2*math.pi
-        #self.push_force = [math.sin(ang)*np.random.randint( self.push_min_force_norm, self.push_max_force_norm ), 
-        #                   math.cos(ang)*np.random.randint( self.push_min_force_norm, self.push_max_force_norm ), 0]
-        
-        #if(self.CONFIG["deterministicPushes"]):
-        #    print("Next deterministic push: f=", self.push_force, "d=", self.push_duration)
 
         p.setGravity(0,0,-9.81)
         self.tilt = np.array([0,0,-9.81])
@@ -1637,11 +1370,6 @@ class Talos():
                 self.obstCourse_progress = None
                 self.generate_obstacle_course_walk_command()
 
-            # elif self.walk_trajectory_No == 4: # input command
-            #         self.apply_walk_command()
-            
-                
-            # self.predict_FeetCenter, self.predict_Rot = self.get_feet_center_and_rotation()
             self.stats_old_predT = 1
             self.stats_old_predX = 1
             self.stats_old_predY = 1
@@ -1688,8 +1416,6 @@ class Talos():
 
         self.tiltplat_joints = np.array([0,0],np.float32)
 
-        #for i in range(p.getNumJoints(self.ComanId)):
-        #    print(p.getJointInfo(self.ComanId, i))
 
         return self.observe()
        

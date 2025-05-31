@@ -27,11 +27,67 @@ This implementation is a cornerstone of my doctoral work and contributes to the 
 
 
 
+
+# 🧠 Reward Function (High-Level Overview)
+
+The reward function in this environment is crafted to promote **stable, energy-efficient, and goal-directed walking behavior**. It follows a simple but effective structure:
+
+#### 📐 Reward Equation (High-Level)
+```python
+Reward = 1.0 - EnergyPenalty - CommandPenalty
+```
+
+- **Base Reward**: The reward starts at `1.0` each step.
+- **Energy Penalty**: Encourages efficient behavior by penalizing the magnitude of the action vector. Actions affecting torso, hips, ankles, and arms are weighted differently based on their physical influence.
+- **Command Penalty**: Measures how far the robot deviates from a desired motion command (e.g., forward velocity or step direction). This ensures purposeful walking.
+
+- **Failure Detection**: The episode terminates early if the robot falls or makes undesired contact with the ground (non-foot links), acting as an implicit penalty.
+
+
+
+> To ensure learning stability, a minimum reward threshold is enforced:
+```python
+if reward < 0.3:
+    reward = 0.3
+```
+
+---
+
+## Observation Space (High-Level Overview)
+
+The observation vector captures both internal (proprioceptive) and external (environmental) state information of the humanoid robot, enabling robust decision-making during locomotion.
+
+### Joint Features (for each controlled joint)
+- **Position** (rad)
+- **Velocity** (rad/s)
+- **Torque** (Nm)
+- **Symmetrized**: Left and right limb data are mirrored to exploit bilateral symmetry.
+
+### 🌍 Base and Sensor Readings
+- **Base Linear Velocity** (in robot’s local frame):  
+  `[vx, vy, vz]` – measures forward, lateral, and vertical movement
+- **Base Angular Velocity** (in local frame):  
+  `[wx, wy, wz]` – roll, pitch, and yaw rates
+- **Base Height**:  
+  Vertical position of the robot’s torso
+
+- **Gravity Vector** (in robot’s local frame):  
+  `[gx, gy, gz]` – orientation of gravity relative to the robot body
+
+### 🦶 Foot Contact and Pressure
+- **Center of Pressure (CoP)** for:
+  - Left foot: `[x, y]`
+  - Right foot: `[x, y]`
+- **Ground Reaction Forces**:
+  - Total vertical contact force under each foot
+
+This comprehensive observation vector is essential for training policies that can maintain balance, adapt to disturbances, and execute stable walking on varied terrains.
+
+
 # Installation and Setup
 
 ## Clone the Repository:
 
-```
 git clone https://github.com/MohammadKasaei/HumanoidWalking.git
 cd HumanoidWalking
 ```
