@@ -1,9 +1,30 @@
-# HumanoidWalking
+# HumanoidWalking - CPG and DRL
+<div align="center">
+  <img src="imgs/DRL.gif" alt="Image description" width="640">
+</div>
 
-In this repository, you'll find one of the key components of my [PhD research](https://ria.ua.pt/bitstream/10773/33545/1/Documento_Seyed_Kasaei.pdf): a straightforward and effective method for creating walking gaits in humanoid robots. Our strategy blends the Linear Inverted Pendulum Model (LIPM) with Central Pattern Generators (CPG) to craft a unique walk engine. This engine utilizes a state machine to oversee the robot's walking cycle, generating smooth walking paths through a combination of Partial Fourier Series (PFS) oscillators and stabilizing controllers. This repository offers a glimpse into a larger body of work dedicated to advancing the field of humanoid robotics, showcasing a practical and efficient approach to robot locomotion as part of my doctoral journey. I have deployed the walking engine on different platforms including COMAN, Talos and Nao.
+<!-- In this repository, you will find one of the key components of my [PhD research](https://ria.ua.pt/bitstream/10773/33545/1/Documento_Seyed_Kasaei.pdf): a straightforward and effective method for creating walking gaits in humanoid robots. Our strategy blends the Linear Inverted Pendulum Model (LIPM) with Central Pattern Generators (CPG) to craft a unique walk engine. This engine utilizes a state machine to oversee the robot's walking cycle, generating smooth walking paths through a combination of Partial Fourier Series (PFS) oscillators and stabilizing controllers. This repository offers a glimpse into a larger body of work dedicated to advancing the field of humanoid robotics, showcasing a practical and efficient approach to robot locomotion as part of my doctoral journey. I have deployed the walking engine on different platforms including COMAN, Talos and Nao. -->
 
-![Alt](imgs/coman.png) 
-![Alt](imgs/talos.png) 
+### 🦿 Humanoid Robot Walking Engine
+
+This repository contains the **core component** of our **end-to-end walking pipeline**, developed as part of my [PhD research](https://ria.ua.pt/bitstream/10773/33545/1/Documento_Seyed_Kasaei.pdf). It presents a robust framework for generating walking gaits in humanoid robots.
+
+#### 🔧 Key Features:
+- 🚶‍♂️ **Hybrid Walking Engine**: Combines the **Linear Inverted Pendulum Model (LIPM)** with **Central Pattern Generators (CPGs)** for trajectory generation.
+- 🧠 **State Machine Control**: A modular finite-state machine orchestrates the phases of the walking cycle.
+- 🔄 **Smooth Gait Generation**: Utilizes **Partial Fourier Series (PFS) oscillators** to produce smooth and continuous joint trajectories.
+- 🛠️ **Stabilization Controllers**: Includes feedback mechanisms for dynamic stability during locomotion.
+- 🤖 **Multi-Platform Deployment**: Successfully deployed on multiple humanoid platforms including:
+  - **COMAN**
+  - **Talos**
+  - **Nao**
+
+This implementation is a cornerstone of my doctoral work and contributes to the broader goal of enabling reliable, dynamic locomotion in humanoid robots.
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <img src="imgs/coman.png" alt="Image description" width="320">
+  <img src="imgs/talos.png" alt="Image description" width="320">
+</div>
 
 
 
