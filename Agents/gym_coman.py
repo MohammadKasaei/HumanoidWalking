@@ -1281,9 +1281,14 @@ class HumanoidGym():
         p.disconnect()
 
 if __name__ == "__main__":
-    agent = HhumanoidGym()
-    agent.reset()
-    while True:
-        obs, reward, terminal, _ = agent.step(np.zeros(30))
-        if terminal:
-            agent.reset()
+
+    env = HumanoidGym()
+    obs = env.reset()
+
+    done = False
+    while not done:
+        action = env.action_space.sample()  # replace with your RL agent's action
+        obs, reward, done, info = env.step(action)
+
+    env.close()
+   
