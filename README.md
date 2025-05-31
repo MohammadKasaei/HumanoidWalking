@@ -3,7 +3,6 @@
   <img src="imgs/DRL.gif" alt="Image description" width="720">
 </div>
 
-<!-- In this repository, you will find one of the key components of my [PhD research](https://ria.ua.pt/bitstream/10773/33545/1/Documento_Seyed_Kasaei.pdf): a straightforward and effective method for creating walking gaits in humanoid robots. Our strategy blends the Linear Inverted Pendulum Model (LIPM) with Central Pattern Generators (CPG) to craft a unique walk engine. This engine utilizes a state machine to oversee the robot's walking cycle, generating smooth walking paths through a combination of Partial Fourier Series (PFS) oscillators and stabilizing controllers. This repository offers a glimpse into a larger body of work dedicated to advancing the field of humanoid robotics, showcasing a practical and efficient approach to robot locomotion as part of my doctoral journey. I have deployed the walking engine on different platforms including COMAN, Talos and Nao. -->
 
 ### 🦿 Humanoid Robot Walking Engine
 
@@ -61,13 +60,17 @@ python3 Coman_CPG.py
 ```
 Once everything successfully installed, you'll see the simulated COMAN while **walking forward** within the PyBullet simulator.
 
-![Alt](imgs/coman.gif)
+<div align="center">
+  <img src="imgs/coman.gif" alt="Image description" width="640">
+</div>
 
 Additionally, by running the following command, you'll see the simulated Talos robot performing **omnidirectional walking**.
 ```
 python3 Talos_CPG.py
 ```
-![Alt](imgs/talos.gif)
+<div align="center">
+  <img src="imgs/talos.gif" alt="Image description" width="640">
+</div>
 
 
 
