@@ -16,9 +16,7 @@ from Walking.GenrateWalkingTrajectories import GenrateWalkingTrajectories
 __cwd__ = os.path.realpath( os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 class Talos():
-    def Test(self):
-        pass
-
+    
     def __init__(self, *args, **kwargs):
 
         __cwd__ = os.path.realpath( os.path.join(os.getcwd(), os.path.dirname(__file__)))
@@ -672,33 +670,6 @@ class Talos():
         yCopL = lCoP[0]
         xCopR = rCoP[1]
         yCopR = rCoP[0]
-
-        #print("LFOOT: {:.3f} {:.3f} {:.3f}".format(lCoP[0],lCoP[1],lCoP[2]), end='  ')
-        #print("RFOOT: {:.3f} {:.3f} {:.3f}".format(rCoP[0],rCoP[1],rCoP[2]))
-        
-
-
-        #JointStateLeft = p.getJointState(self.ComanId, 54)#42)
-        #JointStateRight = p.getJointState(self.ComanId,40)#56)
-
-        # ForceTorqueLeft = JointStateLeft[2]
-        # ForceTorqueRight = JointStateRight[2]
-
-        # H = 0.05
-        # p1 = 50
-        # if (ForceTorqueRight[2] < 30):
-        #     xCopR = -( ForceTorqueRight[4] + ForceTorqueRight[0] ) * H / p1
-        #     yCopR = -( ForceTorqueRight[3] + ForceTorqueRight[1] ) * H / p1
-        # else:
-        #     xCopR = -( ForceTorqueRight[4] + ForceTorqueRight[0] ) * H / ForceTorqueRight[2]
-        #     yCopR = -( ForceTorqueRight[3] + ForceTorqueRight[1] ) * H / ForceTorqueRight[2]
-        
-        # if (ForceTorqueLeft[2] < 30):
-        #     xCopL = -( ForceTorqueLeft[4] + ForceTorqueLeft[0] ) * H / p1
-        #     yCopL = -( ForceTorqueLeft[3] + ForceTorqueLeft[1] ) * H / p1
-        # else:
-        #     xCopL = -( ForceTorqueLeft[4] + ForceTorqueLeft[0] ) * H / ForceTorqueLeft[2]
-        #     yCopL = -( ForceTorqueLeft[3] + ForceTorqueLeft[1] ) * H / ForceTorqueLeft[2]
 
         if (init):
             self.CoP_L = [xCopL,yCopL]

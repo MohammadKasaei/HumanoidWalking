@@ -16,9 +16,7 @@ from Walking.GenrateWalkingTrajectories import GenrateWalkingTrajectories
 __cwd__ = os.path.realpath( os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 class Coman():
-    def Test(self):
-        pass
-
+   
     def __init__(self, *args, **kwargs):
 
         __cwd__ = os.path.realpath( os.path.join(os.getcwd(), os.path.dirname(__file__)))
@@ -29,9 +27,6 @@ class Coman():
         except:
             assert False, "You need to have a configuration file with the name of your host machine: config_" + platform.node() + '.txt'
 
-        # self.thread_no = args[0]
-        # self.mpi_size = args[1]
-        # self.network_name = args[2]
         self.thread_no    = 0
         self.mpi_size     = 0
         self.network_name = 0
@@ -531,10 +526,8 @@ class Coman():
         if self.FloorId == -1:
             p.setAdditionalSearchPath(pd.getDataPath())
             self.FloorId = p.loadURDF("plane.urdf",[0,0,-z_difference])
-            #self.FloorId = p.loadURDF("plane_ice.urdf",[0,0,-z_difference])
 
         p.setAdditionalSearchPath("")
-        # self.ComanId = p.loadURDF(__cwd__ + "/models/coman/model_org_" + platform.node() + ".urdf",[0,0,0.465+0.05])
         self.ComanId = p.loadURDF(__cwd__ + "/models/coman/model_org.urdf",[0,0,0.465+0.05])
 
         #Stabilize robot for some iterations
@@ -734,7 +727,7 @@ class Coman():
             self.walk_duration -= 1
 
         #--------------------------------------- Manual push
-        if(self.CONFIG["clientMode"]=="GUI"):
+        if(self.CONFIG["clientMode"] == "GUI"):
             val = p.readUserDebugParameter(self.param_apply)
             if val!=self.param_apply_val:
                 self.param_apply_val = val
@@ -752,23 +745,23 @@ class Coman():
         #--------------------------------------- External perturbations (depends on scenario)
         terminal=False
         
-        # if self.ENABLE_PERTURBATIONS:
-        #     if self.scenario == 0:
-        #         self.auto_push_routine() #apply pushes automatically
-        #     elif self.scenario == 3:
-        #         self.auto_gravity_routine()
-        #     elif self.scenario == 4:  #uneven terrain
-        #         self.auto_push_routine() #apply pushes automatically
-        #     elif self.scenario == 5 or self.scenario == 6:  #flat / uneven (radial test)
-        #         terminal = self.radial_push_routine()
-        #     elif self.scenario == 7: #tilting platform
-        #         terminal = self.auto_tilt_routine()
-        #     elif self.scenario == 8: #cinematic push
-        #         self.cinematic_push_routine()
-        #     elif self.scenario == 9: #obstacle course
-        #         self.auto_push_routine()
-        #     elif self.scenario == 10: #figure_8 
-        #         self.auto_push_routine()
+        if self.ENABLE_PERTURBATIONS:
+            if self.scenario == 0:
+                self.auto_push_routine() #apply pushes automatically
+            elif self.scenario == 3:
+                self.auto_gravity_routine()
+            elif self.scenario == 4:  #uneven terrain
+                self.auto_push_routine() #apply pushes automatically
+            elif self.scenario == 5 or self.scenario == 6:  #flat / uneven (radial test)
+                terminal = self.radial_push_routine()
+            elif self.scenario == 7: #tilting platform
+                terminal = self.auto_tilt_routine()
+            elif self.scenario == 8: #cinematic push
+                self.cinematic_push_routine()
+            elif self.scenario == 9: #obstacle course
+                self.auto_push_routine()
+            elif self.scenario == 10: #figure_8 
+                self.auto_push_routine()
                 
 
         # #--------------------------------------- Push force arrow
@@ -786,7 +779,7 @@ class Coman():
         #     if self.arrow_life == 0: self.arrow_ID = -1
 
 
-            #p.addUserDebugText(text=str(self.push_force),textPosition=robotpos+[0,0,1], lifeTime=0.5)
+        #     p.addUserDebugText(text=str(self.push_force),textPosition=robotpos+[0,0,1], lifeTime=0.5)
 
 
         if (abs(self.gtime-self.twalk0) > (2*self.StepTime)-(self.SamplingTime/2)):
@@ -952,7 +945,7 @@ class Coman():
 
         p.stepSimulation()
 
-        if(self.CONFIG["clientMode"]=="GUI"):
+        if(self.CONFIG["clientMode"] == "GUI"):
             camState = p.getDebugVisualizerCamera()
             w = 0.98
             focus = [w*camState[11][0]+(1-w)*self.pos[0], w*camState[11][1]+(1-w)*self.pos[1], 0.5]
@@ -1006,14 +999,14 @@ class Coman():
         
         reward = 0
         if self.commandPenalty is not None:
-            en_pen = 0.5*self.energy_penalty_sum/self.energy_penalty_sum_cnt
+            en_pen = 0.5 * self.energy_penalty_sum / self.energy_penalty_sum_cnt
             self.energy_penalty_sum = 0.0
             self.energy_penalty_sum_cnt = 0
 
-            reward = 1 - en_pen - (self.commandPenalty*0.4)
+            reward = 1 - en_pen - (self.commandPenalty * 0.4)
             if reward < 0.3: reward = 0.3
             
-            if self.CONFIG["clientMode"]=="GUI":
+            if self.CONFIG["clientMode"] == "GUI":
                 print("Rew: {:.3f} En: {:.3f} Cmd: {:.3f} ".format(reward,  en_pen, self.commandPenalty))
 
         else:
@@ -1413,3 +1406,9 @@ class Coman():
 
         return self.observe()
        
+
+
+if __name__ == "__main__":
+    robotEnv = Coman()
+    robotEnv.reset()
+    
