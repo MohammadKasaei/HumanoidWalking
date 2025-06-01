@@ -1,7 +1,7 @@
 
 # HumanoidWalking - CPG and DRL
 <div align="center">
-  <img src="imgs/DRL.gif" alt="Image description" width="720">
+  <img src="imgs/DRL.gif" alt="Image description" width="800">
 </div>
 
 ## 🧠 Deep Reinforcement Learning (DRL) Control
