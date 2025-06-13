@@ -289,7 +289,7 @@ class Talos():
 
     def update_time_param(self):
 
-        self.DSP_Ratio      = 0.2
+        self.DSP_Ratio      = 0.25
         self.PELVIS_OFFSET  = 0.0
         self.ARM_SWING_GAIN = 0
         

@@ -70,12 +70,15 @@ The observation includes:
 - 🤖 **Multi-Platform Deployment**: Successfully deployed on multiple humanoid platforms including:
   - **COMAN**
   - **Talos**
+  - **Unitree G1**
 
 This implementation is a cornerstone of my doctoral work and contributes to the broader goal of enabling reliable, dynamic locomotion in humanoid robots.
 
 <div style="display: flex; justify-content: space-between; align-items: center;">
-  <img src="imgs/coman.png" alt="Image description" width="320">
-  <img src="imgs/talos.png" alt="Image description" width="320">
+  <img src="imgs/coman.png" alt="Image description"height = 280 width="213">
+  <img src="imgs/talos.png" alt="Image description"height = 280 width="213">
+  <img src="imgs/G1.png" alt="Image description" height = 280 width="213">
+  
 </div>
 
 
@@ -134,6 +137,16 @@ python3 Talos_CPG.py
 
 <div align="center">
   <img src="imgs/talos.gif" alt="Image description" width="640">
+</div>
+
+
+Or you can test it on G1 using the follwoing command:
+```bash
+python3 G1_CPG.py
+```
+
+<div align="center">
+  <img src="imgs/G1.gif" alt="Image description" width="640">
 </div>
 
 

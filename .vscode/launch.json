@@ -4,12 +4,30 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
+        {
+            "name": "Python Debugger: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
         {
             "name": "Python Debugger: COMAN AGENT",
             "type": "debugpy",
             "request": "launch",
             "module": "Agents.gym_coman"
-        }
+        },
+        {
+            "name": "Python Debugger: COMAN CPG",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "Coman_CPG"
+        },
+        {
+            "name": "Python Debugger: Talos CPG",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "Talos_CPG"
+        },
     ]
 }

@@ -1,7 +1,7 @@
 import numpy as np
 import scipy.sparse as sparse
 from Walking import GenrateWalkingTrajectories as WG
-from Agents import ComanAgent, TalosAgent
+from Agents import ComanAgent, G1Agent
 
 
 if __name__ == '__main__':

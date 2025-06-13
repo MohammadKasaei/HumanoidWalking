@@ -12,11 +12,13 @@ if __name__ == '__main__':
      
     robot.StepX = 0.
     robot.StepY = 0.
+    robot.SwingStepZ = 0.05
     robot.StepTheta = 0.0
     robot.StepTime = 0.5
 
     robot.update_time_param()
     robot.update_move_param()
+    
 
     # for i in range(10000):
     #     robot.motorTest(3,-i*0.0001)

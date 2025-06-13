@@ -760,8 +760,8 @@ class Coman():
                 self.cinematic_push_routine()
             elif self.scenario == 9: #obstacle course
                 self.auto_push_routine()
-            elif self.scenario == 10: #figure_8 
-                self.auto_push_routine()
+            # elif self.scenario == 10: #figure_8 
+            #     self.auto_push_routine()
                 
 
         # #--------------------------------------- Push force arrow
